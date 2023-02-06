@@ -1,0 +1,27 @@
+service: spring-serverless-demo
+frameworkVersion: '3'
+provider:
+  name: aws
+  runtime: java11
+
+package:
+  artifact: target/spring-serverless-demo-aws.jar
+
+functions:
+  postHello:
+    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+    environment:
+      FUNCTION_NAME: postHello
+    events:
+      - http:
+          path: hello
+          method: post
+
+  getHello:
+    handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+    environment:
+      FUNCTION_NAME: getHello
+    events:
+      - http:
+          path: hello
+          method: get
